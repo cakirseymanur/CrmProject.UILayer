@@ -18,5 +18,6 @@ namespace CrmProject.EntityLayer.Concrete
         public int CategoryID { get; set; }
         public Category Category { get; set; }
         public bool EmployeeStatus { get; set; }
+       
     }
 }

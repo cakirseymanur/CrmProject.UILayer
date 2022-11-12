@@ -4,14 +4,16 @@ using CrmProject.DataAccessLayer.Concrete;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CrmProject.DataAccessLayer.Migrations
 {
     [DbContext(typeof(Context))]
-    partial class ContextModelSnapshot : ModelSnapshot
+    [Migration("20221111161827_create_employeetask_table")]
+    partial class create_employeetask_table
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -208,17 +210,14 @@ namespace CrmProject.DataAccessLayer.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("AppUserId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("AssigneeUserId")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Details")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("EmployeeID")
+                        .HasColumnType("int");
 
                     b.Property<string>("Status")
                         .HasColumnType("nvarchar(max)");
@@ -228,9 +227,7 @@ namespace CrmProject.DataAccessLayer.Migrations
 
                     b.HasKey("EmployeeTaskID");
 
-                    b.HasIndex("AppUserId");
-
-                    b.HasIndex("AssigneeUserId");
+                    b.HasIndex("EmployeeID");
 
                     b.ToTable("EmployeeTasks");
                 });
@@ -349,19 +346,13 @@ namespace CrmProject.DataAccessLayer.Migrations
 
             modelBuilder.Entity("CrmProject.EntityLayer.Concrete.EmployeeTask", b =>
                 {
-                    b.HasOne("CrmProject.EntityLayer.Concrete.AppUser", "AppUser")
+                    b.HasOne("CrmProject.EntityLayer.Concrete.Employee", "Employee")
                         .WithMany("EmployeeTask")
-                        .HasForeignKey("AppUserId")
+                        .HasForeignKey("EmployeeID")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("CrmProject.EntityLayer.Concrete.AppUser", "AppAssigneeUser")
-                        .WithMany("AssigneeEmployeeTask")
-                        .HasForeignKey("AssigneeUserId")
-                        .IsRequired();
-
-                    b.Navigation("AppAssigneeUser");
-
-                    b.Navigation("AppUser");
+                    b.Navigation("Employee");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
@@ -415,16 +406,14 @@ namespace CrmProject.DataAccessLayer.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("CrmProject.EntityLayer.Concrete.AppUser", b =>
-                {
-                    b.Navigation("AssigneeEmployeeTask");
-
-                    b.Navigation("EmployeeTask");
-                });
-
             modelBuilder.Entity("CrmProject.EntityLayer.Concrete.Category", b =>
                 {
                     b.Navigation("Employees");
+                });
+
+            modelBuilder.Entity("CrmProject.EntityLayer.Concrete.Employee", b =>
+                {
+                    b.Navigation("EmployeeTask");
                 });
 #pragma warning restore 612, 618
         }

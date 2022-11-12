@@ -4,14 +4,16 @@ using CrmProject.DataAccessLayer.Concrete;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CrmProject.DataAccessLayer.Migrations
 {
     [DbContext(typeof(Context))]
-    partial class ContextModelSnapshot : ModelSnapshot
+    [Migration("20221111170808_mig_change_emptask_relation2")]
+    partial class mig_change_emptask_relation2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -211,9 +213,6 @@ namespace CrmProject.DataAccessLayer.Migrations
                     b.Property<int>("AppUserId")
                         .HasColumnType("int");
 
-                    b.Property<int>("AssigneeUserId")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
@@ -229,8 +228,6 @@ namespace CrmProject.DataAccessLayer.Migrations
                     b.HasKey("EmployeeTaskID");
 
                     b.HasIndex("AppUserId");
-
-                    b.HasIndex("AssigneeUserId");
 
                     b.ToTable("EmployeeTasks");
                 });
@@ -352,14 +349,8 @@ namespace CrmProject.DataAccessLayer.Migrations
                     b.HasOne("CrmProject.EntityLayer.Concrete.AppUser", "AppUser")
                         .WithMany("EmployeeTask")
                         .HasForeignKey("AppUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("CrmProject.EntityLayer.Concrete.AppUser", "AppAssigneeUser")
-                        .WithMany("AssigneeEmployeeTask")
-                        .HasForeignKey("AssigneeUserId")
-                        .IsRequired();
-
-                    b.Navigation("AppAssigneeUser");
 
                     b.Navigation("AppUser");
                 });
@@ -417,8 +408,6 @@ namespace CrmProject.DataAccessLayer.Migrations
 
             modelBuilder.Entity("CrmProject.EntityLayer.Concrete.AppUser", b =>
                 {
-                    b.Navigation("AssigneeEmployeeTask");
-
                     b.Navigation("EmployeeTask");
                 });
 
