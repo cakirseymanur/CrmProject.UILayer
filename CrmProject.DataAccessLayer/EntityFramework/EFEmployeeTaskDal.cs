@@ -30,5 +30,14 @@ namespace CrmProject.DataAccessLayer.EntityFramework
                 return values;
             }
         }
+
+        public List<EmployeeTask> GetEmployeeTasksByUserId(int id)
+        {
+            using (var context = new Context())
+            {
+                var values = context.EmployeeTasks.Where(x => x.AppUserId==id).ToList();
+                return values;
+            }
+        }
     }
 }

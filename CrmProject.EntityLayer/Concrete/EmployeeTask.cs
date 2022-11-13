@@ -17,5 +17,6 @@ namespace CrmProject.EntityLayer.Concrete
         public AppUser AppUser { get; set; }
         public int AssigneeUserId { get; set; }//Atayan
         public AppUser AppAssigneeUser { get; set; }
+        public List<EmployeeTaskDetail> EmployeeTaskDetail { get; set; }
     }
 }

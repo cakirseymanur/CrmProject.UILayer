@@ -11,5 +11,6 @@ namespace CrmProject.DataAccessLayer.Abstract
     {
         List<EmployeeTask> GetEmployeeTasksByEmployee();
         List<EmployeeTask> GetEmployeeTasksByEmployeeAndAssigneeUser();
+        List<EmployeeTask> GetEmployeeTasksByUserId(int id);
     }
 }

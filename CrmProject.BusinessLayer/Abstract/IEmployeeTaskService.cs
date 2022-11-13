@@ -11,5 +11,6 @@ namespace CrmProject.BusinessLayer.Abstract
     {
         List<EmployeeTask> TGetEmployeeTasksByEmployee();
         List<EmployeeTask> TGetEmployeeTasksByEmployeeAndAssigneeUser();
+        List<EmployeeTask> TGetEmployeeTasksByUserId(int id);
     }
 }

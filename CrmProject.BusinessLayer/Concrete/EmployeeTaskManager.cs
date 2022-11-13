@@ -38,6 +38,11 @@ namespace CrmProject.BusinessLayer.Concrete
             return _employeeTask.GetEmployeeTasksByEmployeeAndAssigneeUser();
         }
 
+        public List<EmployeeTask> TGetEmployeeTasksByUserId(int id)
+        {
+            return _employeeTask.GetEmployeeTasksByUserId(id);
+        }
+
         public List<EmployeeTask> TGetList()
         {
             throw new NotImplementedException();
