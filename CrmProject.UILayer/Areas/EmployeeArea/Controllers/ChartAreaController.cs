@@ -19,18 +19,18 @@ namespace CrmProject.UILayer.Areas.EmployeeArea.Controllers
         {
             departmantSalaries.Add(new DepartmantSalary()
             {
-                departmantName = "Muhasebe",
-                salaryAvg = 10000
+                departmantname = "Muhasebe",
+                salaryavg = 10000
             });
             departmantSalaries.Add(new DepartmantSalary()
             {
-                departmantName = "IT",
-                salaryAvg = 30000
+                departmantname = "IT",
+                salaryavg = 30000
             });
             departmantSalaries.Add(new DepartmantSalary()
             {
-                departmantName = "Satış",
-                salaryAvg = 20000
+                departmantname = "Satış",
+                salaryavg = 20000
             });
             return Json(new {jsonList=departmantSalaries});
         }

@@ -7,7 +7,7 @@ namespace CrmProject.UILayer.Models
 {
     public class DepartmantSalary
     {
-        public string departmantName { get; set; }
-        public int salaryAvg { get; set; }
+        public string departmantname { get; set; }
+        public int salaryavg { get; set; }
     }
 }
