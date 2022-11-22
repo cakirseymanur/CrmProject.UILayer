@@ -36,5 +36,6 @@ namespace CrmProject.DataAccessLayer.Concrete
         public DbSet<EmployeeTask> EmployeeTasks { get; set; }
         public DbSet<EmployeeTaskDetail> EmployeeTaskDetails { get; set; }
         public DbSet<Message> Messages { get; set; }
+        public DbSet<Announcement> Announcements { get; set; }
     }
 }
