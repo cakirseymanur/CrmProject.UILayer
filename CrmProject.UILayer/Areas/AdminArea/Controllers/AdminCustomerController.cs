@@ -41,5 +41,17 @@ namespace CrmProject.UILayer.Areas.AdminArea.Controllers
             var customer = JsonConvert.SerializeObject(_customerService.TGetById(CustomerID));
             return Json(customer);
         }
+        public IActionResult DeleteCustomer(int id)
+        {
+            var values = _customerService.TGetById(id);
+            _customerService.TDelete(values);
+            return Json(values);
+        }
+        public IActionResult UpdateCustomer(Customer customer)
+        {
+           _customerService.TUpdate(customer);
+            var values = JsonConvert.SerializeObject(customer);
+            return Json(values);
+        }
     }
 }

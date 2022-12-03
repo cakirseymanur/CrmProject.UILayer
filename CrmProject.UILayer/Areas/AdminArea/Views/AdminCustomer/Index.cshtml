@@ -5,29 +5,44 @@
 }
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <h1>Müşteri Ajax İşlemleri</h1>
-<br/>
+<br />
 <button type="button" id="btnCustomerList" class=" btn btn-outline-danger">Müşteri Listesi</button>
 <button type="button" id="btnCustomerAdd" class=" btn btn-outline-primary">Müşteri Ekle</button>
 <button type="button" id="btnCustomerGet" class=" btn btn-outline-success">Müşteri Getir</button>
 <button type="button" id="btnCustomerDelete" class=" btn btn-outline-danger">Müşteri Sil</button>
 <button type="button" id="btnCustomerUpdate" class=" btn btn-outline-warning">Müşteri Güncelle</button>
-<br /><br />
+<br />
+<br />
+
+<br />
 <div id="customerlist">
 
 </div>
-<br /><br />
- <div class="form-group">
-     <input type="text" id="textcustomername" class="form-control"  placeholder="Müşteri Adını giriniz" />
-     <input type="text" id="textcustomersurname" class="form-control" placeholder="Müşteri Soyadını giriniz" />
-     <input type="text" id="textcustomermail" class="form-control" placeholder="Müşteri Mailini giriniz" />
-     <input type="text" id="textcustomerphone" class="form-control" placeholder="Müşteri Telefonunu giriniz" />
- </div>
- <div class="form-group">
-     <input type="text" id="textid" class="form-control" placeholder="Aranacak Id değerini giriniz" />
- </div>
- <div id="customergetbyid">
+<br />
+<br />
+<div class="form-group">
+    <input type="text" id="textcustomername" class="form-control" placeholder="Müşteri Adını giriniz" />
+    <input type="text" id="textcustomersurname" class="form-control" placeholder="Müşteri Soyadını giriniz" />
+    <input type="text" id="textcustomermail" class="form-control" placeholder="Müşteri Mailini giriniz" />
+    <input type="text" id="textcustomerphone" class="form-control" placeholder="Müşteri Telefonunu giriniz" />
+</div>
+<div class="form-group">
+    <input type="text" id="textid" class="form-control" placeholder="Aranacak Id değerini giriniz" />
+</div>
+<div id="customergetbyid">
 
- </div>
+</div>
+<br />
+<div>
+    <input type="text" id="textdeleteid" class="form-control" placeholder="Silinecek Id değerini giriniz" />
+</div>
+<div class="form-group">
+    <input type="text" id="textcustomerid" class="form-control" onchange="changedid()" placeholder="Müşteri id giriniz" />
+    <input type="text" id="textcustomername2" class="form-control" placeholder="Müşteri Adını giriniz" />
+    <input type="text" id="textcustomersurname2" class="form-control" placeholder="Müşteri Soyadını giriniz" />
+    <input type="text" id="textcustomermail2" class="form-control" placeholder="Müşteri Mailini giriniz" />
+    <input type="text" id="textcustomerphone2" class="form-control" placeholder="Müşteri Telefonunu giriniz" />
+</div>
 <script>
     $("#btnCustomerList").click(function () {
         $.ajax({
@@ -50,10 +65,10 @@
     });
     $("#btnCustomerAdd").click(function () {
         let customervalues = {
-            CustomerName: $("#textcustomername").val(),
+            CustomerName:    $("#textcustomername").val(),
             CustomerSurname: $("#textcustomersurname").val(),
-            CustomerPhone: $("#textcustomerphone").val(),
-            CustomerMail: $("#textcustomermail").val()
+            CustomerPhone:   $("#textcustomerphone").val(),
+            CustomerMail:    $("#textcustomermail").val()
         };
         $.ajax({
             dataType: "json",
@@ -66,7 +81,7 @@
             }
         });
     });
-    $("#btnCustomerGet").click(x =>{
+    $("#btnCustomerGet").click(x => {
         let id = $("#textid").val();
         $.ajax({
             contentType: "application/json",
@@ -85,11 +100,62 @@
             }
         });
     });
+    $("#btnCustomerDelete").click(x => {
+        let id = $("#textdeleteid").val();
+        $.ajax({
+            contentType: "application/json",
+            dataType: "json",
+            type: "get",
+            url: "/AdminArea/AdminCustomer/DeleteCustomer/" + id,
+            success: function (funk4) {
+                let result = jQuery.parseJSON(funk4);
+                alert("Müşteri Başarılı bir şekilde silindi");
+            }
+        });
+    });
+    $("#btnCustomerUpdate").click(function () {
+        let customervalues = {
+            CustomerID: $("#textcustomerid").val(),
+            CustomerName: $("#textcustomername2").val(),
+            CustomerSurname: $("#textcustomersurname2").val(),
+            CustomerPhone: $("#textcustomerphone2").val(),
+            CustomerMail: $("#textcustomermail2").val()
+        };
+        $.ajax({
+            dataType: "json",
+            type: "post",
+            data: customervalues,
+            url: "/AdminArea/AdminCustomer/UpdateCustomer/",
+            success: function (funk5) {
+                let result = jQuery.parseJSON(funk5);
+                alert("Müşteri Başarılı bir şekilde güncellendi");
+            }
+        });
+    });
+    function changedid() {
+        debugger;
+        let id = $("#textcustomerid").val();
+        $.ajax({
+            contentType: "application/json",
+            dataType: "json",
+            type: "get",
+            url: "/AdminArea/AdminCustomer/GetById/",
+            data: { CustomerID: id },
+            success: function (funk6) {
+                let result = jQuery.parseJSON(funk6);
+                console.log(result);
+                $("#textcustomername2").val(result.CustomerName);
+                $("#textcustomersurname2").val(result.CustomerSurname);
+                $("#textcustomerphone2").val(result.CustomerSurname),
+                $("#textcustomermail2").val(result.CustomerMail)
+            }
+        });
+    }
 </script>
 <style>
     .btn {
-        display:inline-block;
-        inline-size:200px;
+        display: inline-block;
+        inline-size: 200px;
     }
 </style>
 
