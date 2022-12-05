@@ -1,5 +1,6 @@
 ﻿using CrmProject.EntityLayer.Concrete;
 using CrmProject.UILayer.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -9,13 +10,16 @@ using System.Threading.Tasks;
 
 namespace CrmProject.UILayer.Controllers
 {
+    [AllowAnonymous]
     public class RoleController : Controller
     {
         private readonly RoleManager<AppRole> _roleManager;
+        private readonly UserManager<AppUser> _userManager;
 
-        public RoleController(RoleManager<AppRole> roleManager)
+        public RoleController(RoleManager<AppRole> roleManager, UserManager<AppUser> userManager)
         {
             _roleManager = roleManager;
+            _userManager = userManager;
         }
 
         public IActionResult Index()
@@ -62,5 +66,29 @@ namespace CrmProject.UILayer.Controllers
             }
             return View();
         }
+        [HttpGet]
+        public IActionResult UpdateRole(int id)
+        {
+            var role = _roleManager.Roles.FirstOrDefault(x => x.Id == id);
+            return View(role);
+        }
+        [HttpPost]
+        public async Task<IActionResult> UpdateRole(AppRole appRole)
+        {
+            var role = _roleManager.Roles.FirstOrDefault(x => x.Id == appRole.Id);
+            role.Name = appRole.Name;
+            var result = await _roleManager.UpdateAsync(role);
+            if (result.Succeeded)
+            {
+                return RedirectToAction("Index");
+            }
+            return View();
+        }
+        public IActionResult UserList()
+        {
+            var values = _userManager.Users.ToList();
+            return View(values);
+        }
+       
     }
 }

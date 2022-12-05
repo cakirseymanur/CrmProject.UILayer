@@ -15,5 +15,6 @@ namespace CrmProject.EntityLayer.Concrete
         public string Gender { get; set; }
         public List<EmployeeTask> EmployeeTask { get; set; }
         public List<EmployeeTask> AssigneeEmployeeTask { get; set; }
+        public string MailCode { get; set; }
     }
 }

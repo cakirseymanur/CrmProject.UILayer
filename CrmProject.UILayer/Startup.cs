@@ -6,6 +6,7 @@ using CrmProject.DataAccessLayer.Concrete;
 using CrmProject.DataAccessLayer.EntityFramework;
 using CrmProject.EntityLayer.Concrete;
 using CrmProject.UILayer.Models;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -38,7 +39,11 @@ namespace CrmProject.UILayer
             services.AddDbContext<Context>();
             services.AddIdentity<AppUser, AppRole>().AddErrorDescriber<CustomIdentityValidator>().AddEntityFrameworkStores<Context>();
 
-            services.AddControllersWithViews();
+            services.AddAutoMapper(typeof(Startup));
+
+            services.CustomizeValidator();
+
+            services.AddControllersWithViews().AddFluentValidation();
 
             services.AddMvc(config =>
             {

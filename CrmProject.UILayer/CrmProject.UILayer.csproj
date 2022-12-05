@@ -29,6 +29,7 @@
   <ItemGroup>
     <ProjectReference Include="..\CrmProject.BusinessLayer\CrmProject.BusinessLayer.csproj" />
     <ProjectReference Include="..\CrmProject.DataAccessLayer\CrmProject.DataAccessLayer.csproj" />
+    <ProjectReference Include="..\CrmProject.DTOLayer\CrmProject.DTOLayer.csproj" />
     <ProjectReference Include="..\CrmProject.EntityLayer\CrmProject.EntityLayer.csproj" />
   </ItemGroup>
 
