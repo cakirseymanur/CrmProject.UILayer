@@ -62,7 +62,7 @@ namespace CrmProject.UILayer.Areas.EmployeeArea.Controllers
         {
             MimeMessage mimeMessage = new MimeMessage();
 
-            MailboxAddress mailboxAddressfrom = new MailboxAddress("Admin","akayseymanur@gmail.com");
+            MailboxAddress mailboxAddressfrom = new MailboxAddress("Admin", "symnr1cakir@gmail.com");
             mimeMessage.From.Add(mailboxAddressfrom);
 
             MailboxAddress mailboxAddressto= new MailboxAddress("User", mailRequest.ReceiverMail);
@@ -77,7 +77,7 @@ namespace CrmProject.UILayer.Areas.EmployeeArea.Controllers
 
             SmtpClient client = new SmtpClient();
             client.Connect("smtp.gmail.com",587,false);
-            client.Authenticate("akayseymanur@gmail.com", "uursnctmkcxbnljc");
+            client.Authenticate("symnr1cakir@gmail.com", "ovdzzruhpkjokckm");
             client.Send(mimeMessage);
             client.Disconnect(true);
 

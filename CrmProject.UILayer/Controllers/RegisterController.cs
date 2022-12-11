@@ -46,7 +46,7 @@ namespace CrmProject.UILayer.Controllers
                     if (result.Succeeded)
                     {
                         SendEmail(appUser.Email, appUser.MailCode);
-                        return RedirectToAction("Index", "Login");
+                        return RedirectToAction("EmailConfirmed", "Register");
                     }
                     else
                     {
@@ -85,7 +85,7 @@ namespace CrmProject.UILayer.Controllers
         {
             MimeMessage mimeMessage = new MimeMessage();
 
-            MailboxAddress mailboxAddressFrom = new MailboxAddress("Admin", "akayseymanur@gmail.com");
+            MailboxAddress mailboxAddressFrom = new MailboxAddress("Admin", "symnr1cakir@gmail.com");
             mimeMessage.From.Add(mailboxAddressFrom); //Mailin kimden gönderildiği
 
             MailboxAddress mailboxAddressTo = new MailboxAddress("User", email);
@@ -99,7 +99,7 @@ namespace CrmProject.UILayer.Controllers
 
             SmtpClient smtp = new SmtpClient(); //SİMPLE MAİL TRANSFER PROTOCOL
             smtp.Connect("smtp.gmail.com", 587, false);
-            smtp.Authenticate("akayseymanur@gmail.com", "uursnctmkcxbnljc");
+            smtp.Authenticate("symnr1cakir@gmail.com", "ovdzzruhpkjokckm");
             smtp.Send(mimeMessage);
             smtp.Disconnect(true);
         }

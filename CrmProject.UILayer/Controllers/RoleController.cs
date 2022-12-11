@@ -89,6 +89,44 @@ namespace CrmProject.UILayer.Controllers
             var values = _userManager.Users.ToList();
             return View(values);
         }
-       
+
+        [HttpGet]
+        public async Task<IActionResult> AssignRole(int id)
+        {
+            var user = _userManager.Users.FirstOrDefault(x=>x.Id==id);
+            var roles = _roleManager.Roles.ToList();
+            TempData["UserId"]=user.Id;
+            var userRoles = await _userManager.GetRolesAsync(user);
+
+            List<RoleAssignViewModel> models = new List<RoleAssignViewModel>();
+
+            foreach (var item in roles)
+            {
+                RoleAssignViewModel roleAssignViewModel = new RoleAssignViewModel();
+                roleAssignViewModel.Name = item.Name;
+                roleAssignViewModel.RoleID = item.Id;
+                roleAssignViewModel.Exist = userRoles.Contains(item.Name);
+                models.Add(roleAssignViewModel);
+            }
+            return View(models);
+        }
+        [HttpPost]
+        public async Task<IActionResult> AssignRole(List<RoleAssignViewModel> model)
+        {
+            var userid = (int)TempData["UserId"];
+            var user = _userManager.Users.FirstOrDefault(x => x.Id == userid);
+            foreach (var item in model)
+            {
+                if (item.Exist)
+                {
+                    await _userManager.AddToRoleAsync(user, item.Name);
+                }
+                else
+                {
+                    await _userManager.RemoveFromRoleAsync(user, item.Name);
+                }
+            }
+            return RedirectToAction("UserList");
+        }
     }
 }
